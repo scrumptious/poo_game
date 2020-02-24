@@ -28435,32 +28435,28 @@ void Game::ComposeFrame()
 {
 	std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
 
-	for (int i = 0; i < gfx.ScreenWidth; i++) {
-		for (int j = 0; j < gfx.ScreenHeight; j++) {
-			gfx.PutPixel(i, j, Colors::Cyan);
-		}
-	}
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 	
 	std::chrono::duration<float> runtime = end - start;
 
 	float durationSeconds = runtime.count();
-	//if( !isStarted )
-	//{
-	//	DrawTitleScreen( 325,211 );
-	//}
-	//else
-	//{
-	//	goal.Draw( gfx );
-	//	for( int i = 0; i < nPoo; ++i )
-	//	{
-	//		poos[i].Draw( gfx );
-	//	}
-	//	dude.Draw( gfx );
-	//	if( isGameOver )
-	//	{
-	//		DrawGameOver( 358,268 );
-	//	}
-	//	meter.Draw( gfx );
-	//}
+
+	if( !isStarted )
+	{
+		DrawTitleScreen( 325,211 );
+	}
+	else
+	{
+		goal.Draw( gfx );
+		for( int i = 0; i < nPoo; ++i )
+		{
+			poos[i].Draw( gfx );
+		}
+		dude.Draw( gfx );
+		if( isGameOver )
+		{
+			DrawGameOver( 358,268 );
+		}
+		meter.Draw( gfx );
+	}
 }
