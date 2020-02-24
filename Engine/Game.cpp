@@ -21,6 +21,7 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include <random>
+#include <chrono>
 
 Game::Game( MainWindow& wnd )
 	:
@@ -37,7 +38,7 @@ Game::Game( MainWindow& wnd )
 	{
 		poos[i].Init( xDist( rng ),yDist( rng ),vDist( rng ),vDist( rng ) );
 	}
-	title.Play();
+	//title.Play();
 }
 
 void Game::Go()
@@ -50,6 +51,8 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	float dt = ft.Mark();
+
 	goal.UpdateColor();
 	if( isStarted && !isGameOver )
 	{
@@ -28430,22 +28433,34 @@ void Game::DrawTitleScreen( int x,int y )
 
 void Game::ComposeFrame()
 {
-	if( !isStarted )
-	{
-		DrawTitleScreen( 325,211 );
-	}
-	else
-	{
-		goal.Draw( gfx );
-		for( int i = 0; i < nPoo; ++i )
-		{
-			poos[i].Draw( gfx );
+	std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+
+	for (int i = 0; i < gfx.ScreenWidth; i++) {
+		for (int j = 0; j < gfx.ScreenHeight; j++) {
+			gfx.PutPixel(i, j, Colors::Cyan);
 		}
-		dude.Draw( gfx );
-		if( isGameOver )
-		{
-			DrawGameOver( 358,268 );
-		}
-		meter.Draw( gfx );
 	}
+	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+	
+	std::chrono::duration<float> runtime = end - start;
+
+	float durationSeconds = runtime.count();
+	//if( !isStarted )
+	//{
+	//	DrawTitleScreen( 325,211 );
+	//}
+	//else
+	//{
+	//	goal.Draw( gfx );
+	//	for( int i = 0; i < nPoo; ++i )
+	//	{
+	//		poos[i].Draw( gfx );
+	//	}
+	//	dude.Draw( gfx );
+	//	if( isGameOver )
+	//	{
+	//		DrawGameOver( 358,268 );
+	//	}
+	//	meter.Draw( gfx );
+	//}
 }
